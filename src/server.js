@@ -14,12 +14,16 @@ connectDB();
 
 // Middleware
 app.use(express.json());
-app.use(cookieParser());
-app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
+app.use(cookieParser()); // Parse cookies
+app.use(cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true, // Allow cookies
+}));
 
 // Routes
-app.use("/api/widgets", widgetRoutes);
+app.use("/api/widget", widgetRoutes);
 app.use("/api/users", userRoutes);
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
