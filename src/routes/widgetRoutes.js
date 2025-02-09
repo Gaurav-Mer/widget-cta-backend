@@ -1,10 +1,12 @@
 import express from "express";
-import { createWidget, getWidgets, authenticateToken, editWidget } from "../controllers/widgetController.js";
+import { createWidget, getWidgets, authenticateToken, editWidget, deleteWidget, getWidget } from "../controllers/widgetController.js";
 const router = express.Router();
-
-router.post("/add", authenticateToken, createWidget);
-router.get("/list", authenticateToken, getWidgets);
-router.put('/:id', authenticateToken, editWidget);
+router.use(authenticateToken);
+router.post("/add", createWidget);
+router.get("/list", getWidgets);
+router.put('/:id', editWidget);
+router.delete('/delete/:id', deleteWidget);
+router.get('/public/:id', getWidget);
 
 
 export default router;

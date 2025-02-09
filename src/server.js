@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import connectDB from "./config/db.js";
 import widgetRoutes from "./routes/widgetRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import publicRoutes from "./routes/publicRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -23,6 +24,7 @@ app.use(cors({
 // Routes
 app.use("/api/widget", widgetRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/public", publicRoutes);
 
 
 const PORT = process.env.PORT || 5000;
