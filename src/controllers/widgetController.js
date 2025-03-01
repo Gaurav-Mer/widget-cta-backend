@@ -1,6 +1,5 @@
 import Widget from "../models/Widget.js";
 import jwt from "jsonwebtoken";
-import { ObjectId } from "mongodb";
 import crypto from "crypto";
 import { generateWidgetToken, getDomainName } from "../utils/index.js";
 
@@ -126,10 +125,12 @@ export const deleteWidget = async (req, res) => {
 export const getWidget = async (req, res) => {
     const { id } = req.params;
     const { domain } = req.query;
-    const currDomain = getDomainName(domain || "")
+    const currDomain = getDomainName(domain || "");
+    const whiteListDomain = [process.env.FRONTEND_DOMAIN];
+    console.log("whiteListDomain", whiteListDomain, currDomain)
     try {
         const widget = await Widget.findById(id);
-        if (!widget || !widget.domain.includes(currDomain)) {
+        if (!widget || (!widget.domain.includes(currDomain) && !whiteListDomain.includes(currDomain))) {
             return res.status(404).json({ message: "Widget not found", isSuccess: false });
         }
         res.status(200).json({ data: widget, message: "Retrieved successfully", isSuccess: true });
